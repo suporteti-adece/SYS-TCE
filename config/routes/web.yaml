@@ -1,0 +1,4 @@
+web_home:
+    resource: 'web/homepage.yaml'
+    prefix: /
+    name_prefix: web_home_
