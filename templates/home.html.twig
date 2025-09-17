@@ -1,5 +1,35 @@
 {% extends "base.html.twig" %}
 
-{% block body %}
+{% block title %}Página Inicial{% endblock %}
 
+{% block body %}
+    <div class="container mt-4">
+        <div class="p-5 mb-4 bg-light rounded-3">
+            <div class="container-fluid py-5">
+                <h1 class="display-5 fw-bold">Sistema de Ordem Cronológica de Exigibilidades</h1>
+                <p class="col-md-8 fs-4">Bem-vindo ao sistema de gerenciamento de pagamentos. Utilize os links abaixo para navegar pelas funcionalidades.</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Listar Pagamentos</h5>
+                        <p class="card-text">Visualize e gerencie todos os pagamentos cadastrados no sistema.</p>
+                        <a href="{{ path('web_exigibilidade_list') }}" class="btn btn-primary">Ir para a Lista</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Cadastrar Novo Pagamento</h5>
+                        <p class="card-text">Adicione um novo registro de pagamento ao sistema.</p>
+                        <a href="{{ path('web_exigibilidade_create') }}" class="btn btn-primary">Cadastrar Pagamento</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

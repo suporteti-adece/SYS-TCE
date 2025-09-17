@@ -1,4 +1,9 @@
-web_home:
+home:
     resource: 'web/homepage.yaml'
     prefix: /
     name_prefix: web_home_
+
+exigibilidade:
+    resource: 'web/exigibilidade.yaml'
+    prefix: /
+    name_prefix: web_exigibilidade_

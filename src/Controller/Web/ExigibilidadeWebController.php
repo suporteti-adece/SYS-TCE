@@ -13,8 +13,8 @@ use Symfony\Component\Uid\Uuid;
 
 class ExigibilidadeWebController extends AbstractController
 {
-    private const string LIST = 'exigibilidade/list.html.twig';
-    private const string CREATE = 'exigibilidade/create.html.twig';
+    private const string LIST = 'list.html.twig';
+    private const string CREATE = 'add.html.twig';
     public function __construct(
         private readonly ExigibilidadeServiceInterface $service,
     ) {

@@ -1,0 +1,133 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Cadastrar Nova Exigibilidade{% endblock %}
+
+{% block content %}
+    <h1>Cadastrar Nova Exigibilidade</h1>
+
+    {% if errors is defined and errors is not empty %}
+        <div class="alert alert-danger">
+            <ul>
+                {% for error in errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <form action="{{ path('web_exigibilidade_create') }}" method="post">
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="exercicio" class="form-label">Exercício</label>
+                <input type="number" class="form-control" id="exercicio" name="exercicio" required>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="semestre" class="form-label">Semestre</label>
+                <input type="text" class="form-control" id="semestre" name="semestre" required>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="codOrgao" class="form-label">Código do Órgão</label>
+                <input type="text" class="form-control" id="codOrgao" name="codOrgao" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="codFonteRecurso" class="form-label">Cód. Fonte do Recurso</label>
+                <input type="text" class="form-control" id="codFonteRecurso" name="codFonteRecurso" required>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="tipoRecurso" class="form-label">Tipo do Recurso</label>
+                <input type="text" class="form-control" id="tipoRecurso" name="tipoRecurso" required>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="tipoExigibilidade" class="form-label">Tipo de Exigibilidade</label>
+                <input type="text" class="form-control" id="tipoExigibilidade" name="tipoExigibilidade" required>
+            </div>
+        </div>
+        <hr>
+        <h5>Contrato de Empréstimo (Opcional)</h5>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="numContratoEmprestimo" class="form-label">Nº Contrato de Empréstimo</label>
+                <input type="text" class="form-control" id="numContratoEmprestimo" name="numContratoEmprestimo">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="anoContratoEmprestimo" class="form-label">Ano do Contrato de Empréstimo</label>
+                <input type="number" class="form-control" id="anoContratoEmprestimo" name="anoContratoEmprestimo">
+            </div>
+        </div>
+        <hr>
+        <h5>Convênio (Opcional)</h5>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="numConvenio" class="form-label">Nº do Convênio</label>
+                <input type="text" class="form-control" id="numConvenio" name="numConvenio">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="anoConvenio" class="form-label">Ano do Convênio</label>
+                <input type="number" class="form-control" id="anoConvenio" name="anoConvenio">
+            </div>
+        </div>
+        <hr>
+        <h5>Nota Fiscal</h5>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="numNotaFiscal" class="form-label">Nº da Nota Fiscal</label>
+                <input type="text" class="form-control" id="numNotaFiscal" name="numNotaFiscal" required>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="dataNotaFiscal" class="form-label">Data da Nota Fiscal</label>
+                <input type="text" class="form-control" id="dataNotaFiscal" name="dataNotaFiscal" placeholder="DD/MM/AAAA" required>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="dataAtesto" class="form-label">Data do Atesto</label>
+                <input type="text" class="form-control" id="dataAtesto" name="dataAtesto" placeholder="DD/MM/AAAA" required>
+            </div>
+        </div>
+        <hr>
+        <h5>Pagamento</h5>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="idPagamento" class="form-label">ID do Pagamento</label>
+                <input type="text" class="form-control" id="idPagamento" name="idPagamento" required>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="dataPagamento" class="form-label">Data do Pagamento</label>
+                <input type="text" class="form-control" id="dataPagamento" name="dataPagamento" placeholder="DD/MM/AAAA" required>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="valorPagamento" class="form-label">Valor do Pagamento</label>
+                <input type="text" class="form-control" id="valorPagamento" name="valorPagamento" required>
+            </div>
+        </div>
+        <hr>
+        <h5>Contratação</h5>
+        <div class="row">
+            <div class="col-md-3 mb-3">
+                <label for="numContrato" class="form-label">Nº do Contrato</label>
+                <input type="text" class="form-control" id="numContrato" name="numContrato" required>
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="anoContrato" class="form-label">Ano do Contrato</label>
+                <input type="number" class="form-control" id="anoContrato" name="anoContrato" required>
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="valorContratacao" class="form-label">Valor da Contratação</label>
+                <input type="text" class="form-control" id="valorContratacao" name="valorContratacao" required>
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="cpfCnpjCredor" class="form-label">CPF/CNPJ do Credor</label>
+                <input type="text" class="form-control" id="cpfCnpjCredor" name="cpfCnpjCredor" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 mb-3">
+                <label for="justificativa" class="form-label">Justificativa (Opcional)</label>
+                <textarea class="form-control" id="justificativa" name="justificativa" rows="3"></textarea>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Salvar</button>
+        <a href="{{ path('web_exigibilidade_list') }}" class="btn btn-secondary">Cancelar</a>
+    </form>
+{% endblock %}

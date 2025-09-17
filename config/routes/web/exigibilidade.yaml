@@ -1,0 +1,9 @@
+list:
+    path: /exigibilidades
+    controller: App\Controller\Web\ExigibilidadeWebController::list
+    methods: ['GET']
+
+create:
+    path: /exigibilidades/criar
+    controller: App\Controller\Web\ExigibilidadeWebController::create
+    methods: ['GET', 'POST']
