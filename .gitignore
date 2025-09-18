@@ -1,6 +1,7 @@
 
 ###> symfony/framework-bundle ###
 /.idea
+/END_480301_2025_02 (4).xml
 /.env
 /.env.local
 /.env.local.php

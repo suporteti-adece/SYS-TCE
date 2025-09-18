@@ -1,4 +1,4 @@
-. PHONY: up down stop container_php install_dependencies migrate_orm reset-deep style compile_frontend reset
+. PHONY: up down stop container_php install_dependencies migrate_orm reset-deep style compile_frontend reset setup
 
 up:
 	docker compose up -d
@@ -43,3 +43,4 @@ style:
 	docker compose exec -T php bash -c "php vendor/bin/phpcs --config-set installed_paths src/Standards"
 	docker compose exec -T php bash -c "php vendor/bin/phpcs"
 
+setup: up install_dependencies reset-deep migrate_orm compile_frontend
