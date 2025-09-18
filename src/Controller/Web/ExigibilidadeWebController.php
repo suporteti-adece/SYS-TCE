@@ -33,71 +33,46 @@ class ExigibilidadeWebController extends AbstractController
 
     public function create(Request $request): Response
     {
-        if (false === $request->isMethod(Request::METHOD_POST)) {
-            return $this->render(self::CREATE);
+        if ($request->isMethod(Request::METHOD_POST)) {
+            try {
+                $data = $request->request->all();
+                $data['id'] = Uuid::v4();
+
+                $cleanCurrency = function (?string $value): ?string {
+                    return $value ? str_replace(',', '.', str_replace(['R$', ' ', '.'], '', $value)) : null;
+                };
+
+                $data['valorPagamento'] = $cleanCurrency($data['valorPagamento'] ?? null);
+                $data['valorContratacao'] = $cleanCurrency($data['valorContratacao'] ?? null);
+
+                $this->service->create($data);
+
+                $this->addFlash('success', 'Exigibilidade cadastrada com sucesso!');
+                return $this->redirectToRoute('web_exigibilidade_list');
+            } catch (Exception $exception) {
+                $this->addFlash('error', 'Erro ao cadastrar exigibilidade: ' . $exception->getMessage());
+            }
         }
 
-        $errors = [];
-
-        try {
-            $cleanCurrency = function (?string $value): ?string {
-                if (null === $value) {
-                    return null;
-                }
-                $value = str_replace(['R$', ' ', '.'], '', $value);
-                $value = str_replace(',', '.', $value);
-                return is_numeric($value) ? $value : null;
-            };
-
-            $this->service->create([
-                'id' => Uuid::v4(),
-                'exercicio' => $request->get('exercicio'),
-                'semestre' => $request->get('semestre'),
-                'codFonteRecurso' => $request->get('codFonteRecurso'),
-                'tipoRecurso' => $request->get('tipoRecurso'),
-                'numContratoEmprestimo' => $request->get('numContratoEmprestimo') ?? null,
-                'anoContratoEmprestimo' => $request->get('anoContratoEmprestimo'),
-                'numConvenio' => $request->get('numConvenio') ?? null,
-                'anoConvenio' => $request->get('anoConvenio'),
-                'numNotaFiscal' => $request->get('numNotaFiscal'),
-                'dataNotaFiscal' => $request->get('dataNotaFiscal'),
-                'dataAtesto' => $request->get('dataAtesto'),
-                'idPagamento' => $request->get('idPagamento'),
-                'dataPagamento' => $request->get('dataPagamento'),
-                'valorPagamento' => $cleanCurrency($request->get('valorPagamento')),
-                'numContrato' => $request->get('numContrato'),
-                'anoContrato' => $request->get('anoContrato'),
-                'valorContratacao' => $cleanCurrency($request->get('valorContratacao')),
-                'cpfCnpjCredor' => $request->get('cpfCnpjCredor'),
-                'tipoExigibilidade' => $request->get('tipoExigibilidade'),
-                'justificativa' => $request->get('justificativa') ?? null,
-            ]);
-
-            $this->addFlash('success', 'Exigibilidade cadastrada com sucesso!');
-        } catch (Exception $exception) {
-            $errors = [$exception->getMessage()];
-        }
-
-        if (false === empty($errors)) {
-            return $this->render(self::CREATE, [
-                'errors' => $errors
-            ]);
-        }
-
-        return $this->redirectToRoute('web_exigibilidade_list');
+        return $this->render(self::CREATE);
     }
 
     public function exportXml(Request $request, ExigibilidadeExportService $exportService): Response
     {
-        $filters = $request->query->all();
+        $exercicio = $request->query->get('exercicio');
+        $semestre = $request->query->get('semestre');
 
-        $exigibilidades = $this->service->findBy($filters);
+        if (empty($exercicio) || empty($semestre)) {
+            $this->addFlash('warning', 'Para exportar, por favor, selecione um Exercício e um Semestre.');
+            return $this->redirectToRoute('web_exigibilidade_list');
+        }
 
-        $exportParams = [
-            'exercicio' => $filters['exercicio'] ?? date('Y'),
-            'semestre' => $filters['semestre'] ?? '1'
+        $filters = [
+            'exercicio' => $exercicio,
+            'semestre' => $semestre,
         ];
 
-        return $exportService->export('xml', $exigibilidades, $exportParams);
+        $exigibilidades = $this->service->findBy($filters);
+        return $exportService->export('xml', $exigibilidades, $filters);
     }
 }

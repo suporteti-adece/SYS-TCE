@@ -35,6 +35,10 @@ readonly class ExigibilidadeService implements ExigibilidadeServiceInterface
 
     public function findBy(array $params = []): array
     {
-        return $this->repository->findBy($params);
+        $filteredParams = array_filter($params, function ($value) {
+            return $value !== null && $value !== '';
+        });
+
+        return $this->repository->findBy($filteredParams);
     }
 }

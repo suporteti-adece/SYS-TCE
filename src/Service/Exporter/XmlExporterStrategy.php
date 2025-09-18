@@ -4,87 +4,57 @@ declare(strict_types=1);
 
 namespace App\Service\Exporter;
 
-use DOMDocument;
+use App\Entity\Exigibilidade;
+use DateTime;
 use Symfony\Component\HttpFoundation\Response;
 
 class XmlExporterStrategy implements ExporterStrategyInterface
 {
-    private string $codEnte;
-    private string $nomeEnte;
-    private string $nomeGestor;
-    private string $cpfGestor;
-    private string $nomeContador;
-    private string $crcContador;
-
-    // O construtor para injetar os dados fixos continua o mesmo
-    public function __construct(
-        string $codEnte,
-        string $nomeEnte,
-        string $nomeGestor,
-        string $cpfGestor,
-        string $nomeContador,
-        string $crcContador
-    ) {
-        $this->codEnte = $codEnte;
-        $this->nomeEnte = $nomeEnte;
-        $this->nomeGestor = $nomeGestor;
-        $this->cpfGestor = $cpfGestor;
-        $this->nomeContador = $nomeContador;
-        $this->crcContador = $crcContador;
-    }
-
-    /**
-     * Documentação: O método 'export' agora aceita os parâmetros de filtro.
-     * @param array $exigibilidades Os dados filtrados a serem exportados.
-     * @param array $params Os filtros ('exercicio', 'semestre') vindos do controller.
-     */
-    public function export(array $exigibilidades, array $params = []): Response
+    public function export(array $data, array $params = []): Response
     {
-        $dom = new DOMDocument('1.0', 'UTF-8');
-        $dom->preserveWhiteSpace = false;
-        $dom->formatOutput = true;
+        $exercicio = $params['exercicio'] ?? date('Y');
+        $semestre = str_pad($params['semestre'] ?? '1', 2, '0', STR_PAD_LEFT);
+        $codOrgao = !empty($data) ? $data[0]->getCodOrgao() : '';
 
-        $remessa = $dom->createElement('REMESSA');
-        $dom->appendChild($remessa);
+        $xml = '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL;
+        $xml .= '<oce>' . PHP_EOL;
+        $xml .= "    <exercicio>{$exercicio}</exercicio>" . PHP_EOL;
+        $xml .= "    <semestre>{$semestre}</semestre>" . PHP_EOL;
+        $xml .= "    <codOrgao>{$codOrgao}</codOrgao>" . PHP_EOL;
+        $xml .= '    <exigibilidades>' . PHP_EOL;
 
-        // Pega o ano e o semestre dos parâmetros recebidos
-        $anoRemessa = $params['exercicio'] ?? date('Y');
-        $semestreRemessa = str_pad($params['semestre'] ?? '1', 2, '0', STR_PAD_LEFT);
+        /** @var Exigibilidade $exigibilidade */
+        foreach ($data as $exigibilidade) {
+            $xml .= '        <exigibilidade>' . PHP_EOL;
 
-        // Usa os dados injetados (fixos) e os parâmetros de filtro (dinâmicos)
-        $cabecalho = $dom->createElement('CABECALHO');
-        $cabecalho->appendChild($dom->createElement('COD_ENTE', $this->codEnte));
-        $cabecalho->appendChild($dom->createElement('NOME_ENTE', $this->nomeEnte));
-        $cabecalho->appendChild($dom->createElement('ANO_REMESSA', $anoRemessa));
-        $cabecalho->appendChild($dom->createElement('SEMESTRE_REMESSA', $semestreRemessa));
-        $remessa->appendChild($cabecalho);
+            $xml .= $this->createNode('codFonteRecurso', $exigibilidade->getCodFonteRecurso());
+            $xml .= $this->createNode('tipoRecurso', $exigibilidade->getTipoRecurso());
+            $xml .= $this->createNode('numContratoEmprestimo', $exigibilidade->getNumContratoEmprestimo());
+            $xml .= $this->createNode('anoContratoEmprestimo', $exigibilidade->getAnoContratoEmprestimo());
+            $xml .= $this->createNode('numConvenio', $exigibilidade->getNumConvenio());
+            $xml .= $this->createNode('anoConvenio', $exigibilidade->getAnoConvenio());
+            $xml .= $this->createNode('numNotaFiscal', $exigibilidade->getNumNotaFiscal());
+            $xml .= $this->createNode('dataNotaFiscal', $this->formatDate($exigibilidade->getDataNotaFiscal()));
+            $xml .= $this->createNode('dataAtesto', $this->formatDate($exigibilidade->getDataAtesto()));
+            $xml .= $this->createNode('idPagamento', $exigibilidade->getIdPagamento());
+            $xml .= $this->createNode('dataPagamento', $this->formatDate($exigibilidade->getDataPagamento()));
+            $xml .= $this->createNode('valorPagamento', $this->formatCurrency($exigibilidade->getValorPagamento()));
+            $xml .= $this->createNode('numContrato', $exigibilidade->getNumContrato());
+            $xml .= $this->createNode('anoContrato', $exigibilidade->getAnoContrato());
+            $xml .= $this->createNode('valorContratacao', $this->formatCurrency($exigibilidade->getValorContratacao()));
+            $xml .= $this->createNode('cpfCnpjCredor', $exigibilidade->getCpfCnpjCredor());
+            $xml .= $this->createNode('tipoExigibilidade', $exigibilidade->getTipoExigibilidade());
+            $xml .= $this->createNode('justificativa', $exigibilidade->getJustificativa());
 
-        // Esta parte continua igual, iterando sobre os dados já filtrados
-        foreach ($exigibilidades as $exigibilidade) {
-            $item = $dom->createElement('EXIGIBILIDADE');
-            $item->appendChild($dom->createElement('NUM_LEI', $exigibilidade->getNumeroLei()));
-            $item->appendChild($dom->createElement('DATA_LEI', $exigibilidade->getDataLei()->format('dmY')));
-            $item->appendChild($dom->createElement('DATA_PUBLICACAO_LEI', $exigibilidade->getDataPublicacaoLei()->format('dmY')));
-            $item->appendChild($dom->createElement('DESCRICAO', $exigibilidade->getDescricao()));
-            $item->appendChild($dom->createElement('VALOR', number_format($exigibilidade->getValor(), 2, ',', '')));
-            $item->appendChild($dom->createElement('DATA_VENCIMENTO', $exigibilidade->getDataVencimento()->format('dmY')));
-            $remessa->appendChild($item);
+            $xml .= '        </exigibilidade>' . PHP_EOL;
         }
 
-        // Rodapé com dados injetados
-        $rodape = $dom->createElement('RODAPE');
-        $rodape->appendChild($dom->createElement('NOME_GESTOR', $this->nomeGestor));
-        $rodape->appendChild($dom->createElement('CPF_GESTOR', $this->cpfGestor));
-        $rodape->appendChild($dom->createElement('NOME_CONTADOR', $this->nomeContador));
-        $rodape->appendChild($dom->createElement('CRC_CONTADOR', $this->crcContador));
-        $remessa->appendChild($rodape);
+        $xml .= '    </exigibilidades>' . PHP_EOL;
+        $xml .= '</oce>' . PHP_EOL;
 
-        $xmlContent = $dom->saveXML();
+        $fileName = sprintf('END_%s_%s_%s.xml', $codOrgao, $exercicio, $semestre);
 
-        // Gera o nome do arquivo dinamicamente com base nos filtros
-        $fileName = sprintf('END_%s_%s_%s.xml', $this->codEnte, $anoRemessa, $semestreRemessa);
-
-        $response = new Response($xmlContent);
+        $response = new Response($xml);
         $response->headers->set('Content-Type', 'application/xml');
         $response->headers->set('Content-Disposition', 'attachment; filename="' . $fileName . '"');
 
@@ -94,5 +64,27 @@ class XmlExporterStrategy implements ExporterStrategyInterface
     public function supports(string $format): bool
     {
         return strtolower($format) === 'xml';
+    }
+
+    private function createNode(string $tagName, ?string $value): string
+    {
+        $escapedValue = htmlspecialchars($value ?? '', ENT_XML1, 'UTF-8');
+        return "            <{$tagName}>{$escapedValue}</{$tagName}>" . PHP_EOL;
+    }
+
+    private function formatDate(?string $date): string
+    {
+        if (empty($date)) {
+            return '';
+        }
+        return (new DateTime($date))->format('d/m/Y');
+    }
+
+    private function formatCurrency(?string $value): string
+    {
+        if (empty($value)) {
+            return '0,00';
+        }
+        return number_format((float) $value, 2, ',', '');
     }
 }
