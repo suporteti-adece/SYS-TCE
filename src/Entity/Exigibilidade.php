@@ -17,64 +17,64 @@ class Exigibilidade
     private ?Uuid $id = null;
 
     #[ORM\Column(length: 4)]
-    private int $exercicio;
+    private string $exercicio;
 
     #[ORM\Column(length: 2)]
     private string $semestre;
 
     #[ORM\Column(length: 6)]
-    private string $codOrgao;
+    private int $codOrgao = 480301;
 
-    #[ORM\Column(length: 2)]
-    private string $codFonteRecurso;
+    #[ORM\Column(length: 2, nullable: true)]
+    private ?string $codFonteRecurso = null;
 
-    #[ORM\Column(length: 2)]
-    private string $tipoRecurso;
+    #[ORM\Column(length: 2, nullable: true)]
+    private ?string $tipoRecurso = null;
 
     #[ORM\Column(length: 30, nullable: true)]
     private ?string $numContratoEmprestimo = null;
 
-    #[ORM\Column(length: 4)]
-    private int $anoContratoEmprestimo;
+    #[ORM\Column(length: 4, nullable: true)]
+    private ?string $anoContratoEmprestimo = null;
 
     #[ORM\Column(length: 30, nullable: true)]
     private ?string $numConvenio = null;
 
-    #[ORM\Column(length: 4)]
-    private int $anoConvenio;
+    #[ORM\Column(length: 4, nullable: true)]
+    private ?string $anoConvenio = null;
 
-    #[ORM\Column(length: 30)]
-    private string $numNotaFiscal;
+    #[ORM\Column(length: 30, nullable: true)]
+    private ?string $numNotaFiscal = null;
 
-    #[ORM\Column(length: 10)]
-    private int $dataNotaFiscal;
+    #[ORM\Column(length: 10, nullable: true)]
+    private ?string $dataNotaFiscal = null;
 
-    #[ORM\Column(length: 10)]
-    private int $dataAtesto;
+    #[ORM\Column(length: 10, nullable: true)]
+    private ?string $dataAtesto = null;
 
-    #[ORM\Column(length: 20)]
-    private string $idPagamento;
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $idPagamento = null;
 
-    #[ORM\Column(length: 10)]
-    private int $dataPagamento;
+    #[ORM\Column(length: 10, nullable: true)]
+    private ?string $dataPagamento = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 15, scale: 2)]
-    private string $valorPagamento;
+    #[ORM\Column(type: Types::DECIMAL, precision: 15, scale: 2, nullable: true)]
+    private ?string $valorPagamento = null;
 
-    #[ORM\Column(length: 30)]
-    private string $numContrato;
+    #[ORM\Column(length: 30, nullable: true)]
+    private ?string $numContrato = null;
 
-    #[ORM\Column(length: 4)]
-    private string $anoContrato;
+    #[ORM\Column(length: 4, nullable: true)]
+    private ?string $anoContrato = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 15, scale: 2)]
-    private string $valorContratacao;
+    #[ORM\Column(type: Types::DECIMAL, precision: 15, scale: 2, nullable: true)]
+    private ?string $valorContratacao = null;
 
-    #[ORM\Column(length: 18)]
-    private string $cpfCnpjCredor;
+    #[ORM\Column(length: 18, nullable: true)]
+    private ?string $cpfCnpjCredor = null;
 
-    #[ORM\Column(length: 2)]
-    private string $tipoExigibilidade;
+    #[ORM\Column(length: 2, nullable: true)]
+    private ?string $tipoExigibilidade = null;
 
     #[ORM\Column(length: 254, nullable: true)]
     private ?string $justificativa = null;
@@ -89,12 +89,12 @@ class Exigibilidade
         $this->id = $id;
     }
 
-    public function getExercicio(): int
+    public function getExercicio(): string
     {
         return $this->exercicio;
     }
 
-    public function setExercicio(int $exercicio): void
+    public function setExercicio(string $exercicio): void
     {
         $this->exercicio = $exercicio;
     }
@@ -109,32 +109,32 @@ class Exigibilidade
         $this->semestre = $semestre;
     }
 
-    public function getCodOrgao(): string
+    public function getCodOrgao(): int
     {
         return $this->codOrgao;
     }
 
-    public function setCodOrgao(string $codOrgao): void
+    public function setCodOrgao(int $codOrgao): void
     {
         $this->codOrgao = $codOrgao;
     }
 
-    public function getCodFonteRecurso(): string
+    public function getCodFonteRecurso(): ?string
     {
         return $this->codFonteRecurso;
     }
 
-    public function setCodFonteRecurso(string $codFonteRecurso): void
+    public function setCodFonteRecurso(?string $codFonteRecurso): void
     {
         $this->codFonteRecurso = $codFonteRecurso;
     }
 
-    public function getTipoRecurso(): string
+    public function getTipoRecurso(): ?string
     {
         return $this->tipoRecurso;
     }
 
-    public function setTipoRecurso(string $tipoRecurso): void
+    public function setTipoRecurso(?string $tipoRecurso): void
     {
         $this->tipoRecurso = $tipoRecurso;
     }
@@ -149,12 +149,12 @@ class Exigibilidade
         $this->numContratoEmprestimo = $numContratoEmprestimo;
     }
 
-    public function getAnoContratoEmprestimo(): int
+    public function getAnoContratoEmprestimo(): ?string
     {
         return $this->anoContratoEmprestimo;
     }
 
-    public function setAnoContratoEmprestimo(int $anoContratoEmprestimo): void
+    public function setAnoContratoEmprestimo(?string $anoContratoEmprestimo): void
     {
         $this->anoContratoEmprestimo = $anoContratoEmprestimo;
     }
@@ -169,122 +169,122 @@ class Exigibilidade
         $this->numConvenio = $numConvenio;
     }
 
-    public function getAnoConvenio(): int
+    public function getAnoConvenio(): ?string
     {
         return $this->anoConvenio;
     }
 
-    public function setAnoConvenio(int $anoConvenio): void
+    public function setAnoConvenio(?string $anoConvenio): void
     {
         $this->anoConvenio = $anoConvenio;
     }
 
-    public function getNumNotaFiscal(): string
+    public function getNumNotaFiscal(): ?string
     {
         return $this->numNotaFiscal;
     }
 
-    public function setNumNotaFiscal(string $numNotaFiscal): void
+    public function setNumNotaFiscal(?string $numNotaFiscal): void
     {
         $this->numNotaFiscal = $numNotaFiscal;
     }
 
-    public function getDataNotaFiscal(): int
+    public function getDataNotaFiscal(): ?string
     {
         return $this->dataNotaFiscal;
     }
 
-    public function setDataNotaFiscal(int $dataNotaFiscal): void
+    public function setDataNotaFiscal(?string $dataNotaFiscal): void
     {
         $this->dataNotaFiscal = $dataNotaFiscal;
     }
 
-    public function getDataAtesto(): int
+    public function getDataAtesto(): ?string
     {
         return $this->dataAtesto;
     }
 
-    public function setDataAtesto(int $dataAtesto): void
+    public function setDataAtesto(?string $dataAtesto): void
     {
         $this->dataAtesto = $dataAtesto;
     }
 
-    public function getIdPagamento(): string
+    public function getIdPagamento(): ?string
     {
         return $this->idPagamento;
     }
 
-    public function setIdPagamento(string $idPagamento): void
+    public function setIdPagamento(?string $idPagamento): void
     {
         $this->idPagamento = $idPagamento;
     }
 
-    public function getDataPagamento(): int
+    public function getDataPagamento(): ?string
     {
         return $this->dataPagamento;
     }
 
-    public function setDataPagamento(int $dataPagamento): void
+    public function setDataPagamento(?string $dataPagamento): void
     {
         $this->dataPagamento = $dataPagamento;
     }
 
-    public function getValorPagamento(): string
+    public function getValorPagamento(): ?string
     {
         return $this->valorPagamento;
     }
 
-    public function setValorPagamento(string $valorPagamento): void
+    public function setValorPagamento(?string $valorPagamento): void
     {
         $this->valorPagamento = $valorPagamento;
     }
 
-    public function getNumContrato(): string
+    public function getNumContrato(): ?string
     {
         return $this->numContrato;
     }
 
-    public function setNumContrato(string $numContrato): void
+    public function setNumContrato(?string $numContrato): void
     {
         $this->numContrato = $numContrato;
     }
 
-    public function getAnoContrato(): string
+    public function getAnoContrato(): ?string
     {
         return $this->anoContrato;
     }
 
-    public function setAnoContrato(string $anoContrato): void
+    public function setAnoContrato(?string $anoContrato): void
     {
         $this->anoContrato = $anoContrato;
     }
 
-    public function getValorContratacao(): string
+    public function getValorContratacao(): ?string
     {
         return $this->valorContratacao;
     }
 
-    public function setValorContratacao(string $valorContratacao): void
+    public function setValorContratacao(?string $valorContratacao): void
     {
         $this->valorContratacao = $valorContratacao;
     }
 
-    public function getCpfCnpjCredor(): string
+    public function getCpfCnpjCredor(): ?string
     {
         return $this->cpfCnpjCredor;
     }
 
-    public function setCpfCnpjCredor(string $cpfCnpjCredor): void
+    public function setCpfCnpjCredor(?string $cpfCnpjCredor): void
     {
         $this->cpfCnpjCredor = $cpfCnpjCredor;
     }
 
-    public function getTipoExigibilidade(): string
+    public function getTipoExigibilidade(): ?string
     {
         return $this->tipoExigibilidade;
     }
 
-    public function setTipoExigibilidade(string $tipoExigibilidade): void
+    public function setTipoExigibilidade(?string $tipoExigibilidade): void
     {
         $this->tipoExigibilidade = $tipoExigibilidade;
     }

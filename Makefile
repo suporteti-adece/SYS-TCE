@@ -1,4 +1,4 @@
-. PHONY: up down stop container_php install_dependencies migrate_orm
+. PHONY: up down stop container_php install_dependencies migrate_orm reset-deep style compile_frontend reset
 
 up:
 	docker compose up -d
@@ -12,11 +12,17 @@ stop:
 container_php:
 	docker compose exec php bash
 
+compile_frontend: reset
+	docker compose exec -T php bash -c "php bin/console asset-map:compile"
+
 install_dependencies:
 	docker compose exec -T php bash -c "composer install --ignore-platform-req=ext-mongodb"
 
 migrate_orm:
 	docker compose exec -T php bash -c "php bin/console doctrine:migrations:migrate -n"
+
+reset:
+	docker compose exec -T php bash -c "php bin/console cache:clear"
 
 reset-deep:
 	rm -rf var/storage
