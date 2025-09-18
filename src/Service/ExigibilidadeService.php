@@ -14,7 +14,7 @@ readonly class ExigibilidadeService implements ExigibilidadeServiceInterface
     public function __construct(
         private ExigibilidadeRepositoryInterface $repository,
         private SerializerInterface $serializer,
-    ){
+    ) {
     }
 
     public function create(array $data): Exigibilidade

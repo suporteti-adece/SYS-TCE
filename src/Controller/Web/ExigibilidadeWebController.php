@@ -15,6 +15,7 @@ class ExigibilidadeWebController extends AbstractController
 {
     private const string LIST = 'list.html.twig';
     private const string CREATE = 'add.html.twig';
+
     public function __construct(
         private readonly ExigibilidadeServiceInterface $service,
     ) {
@@ -25,7 +26,7 @@ class ExigibilidadeWebController extends AbstractController
         $exigibilidades = $this->service->list();
 
         return $this->render(self::LIST, [
-            'exigibilidades' => $exigibilidades
+            'exigibilidades' => $exigibilidades,
         ]);
     }
 
