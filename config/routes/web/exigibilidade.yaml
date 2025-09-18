@@ -7,3 +7,8 @@ create:
     path: /exigibilidades/criar
     controller: App\Controller\Web\ExigibilidadeWebController::create
     methods: ['GET', 'POST']
+
+export_xml:
+    path: /exigibilidade/export/xml
+    controller: App\Controller\Web\ExigibilidadeWebController::exportXml
+    methods: ['GET']

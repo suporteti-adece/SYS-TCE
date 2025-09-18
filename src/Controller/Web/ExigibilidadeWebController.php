@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Web;
 
+use App\Service\ExigibilidadeExportService;
 use App\Service\Interface\ExigibilidadeServiceInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -79,10 +80,24 @@ class ExigibilidadeWebController extends AbstractController
 
         if (false === empty($errors)) {
             return $this->render(self::CREATE, [
-                'errors' => $errors,
+                'errors' => $errors
             ]);
         }
 
         return $this->redirectToRoute('web_exigibilidade_list');
+    }
+
+    public function exportXml(Request $request, ExigibilidadeExportService $exportService): Response
+    {
+        $filters = $request->query->all();
+
+        $exigibilidades = $this->service->findBy($filters);
+
+        $exportParams = [
+            'exercicio' => $filters['exercicio'] ?? date('Y'),
+            'semestre' => $filters['semestre'] ?? '1'
+        ];
+
+        return $exportService->export('xml', $exigibilidades, $exportParams);
     }
 }

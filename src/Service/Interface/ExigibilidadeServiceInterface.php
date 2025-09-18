@@ -11,4 +11,6 @@ interface ExigibilidadeServiceInterface
     public function create(array $data): Exigibilidade;
 
     public function list(int $limit = 100, array $params = []): array;
+
+    public function findBy(array $params): array;
 }

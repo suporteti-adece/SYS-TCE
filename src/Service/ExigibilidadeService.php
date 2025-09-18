@@ -32,4 +32,9 @@ readonly class ExigibilidadeService implements ExigibilidadeServiceInterface
             $limit
         );
     }
+
+    public function findBy(array $params = []): array
+    {
+        return $this->repository->findBy($params);
+    }
 }
