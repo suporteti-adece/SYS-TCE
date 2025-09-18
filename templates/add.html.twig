@@ -25,8 +25,8 @@
                 <label for="semestre" class="form-label">Semestre</label>
                 <select class="form-control" id="semestre" name="semestre" required>
                     <option value="" disabled selected>Selecione</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
+                    <option value="01">01</option>
+                    <option value="02">02</option>
                 </select>
             </div>
             <div class="col-md-2 mb-3">
@@ -51,7 +51,7 @@
             </div>
             <div class="col-md-6 mb-3">
                 <label for="anoContratoEmprestimo" class="form-label">Ano do Contrato de Empréstimo</label>
-                <input type="date" class="form-control" id="anoContratoEmprestimo" name="anoContratoEmprestimo" min="2024-01-01" max="{{ "now"|date("Y-m-d") }}">
+                <input type="text" class="form-control" id="anoContratoEmprestimo" name="anoContratoEmprestimo" maxlength="4">
             </div>
         </div>
         <hr>
@@ -63,7 +63,7 @@
             </div>
             <div class="col-md-6 mb-3">
                 <label for="anoConvenio" class="form-label">Ano do Convênio</label>
-                <input type="date" class="form-control" id="anoConvenio" name="anoConvenio" min="2024-01-01" max="{{ "now"|date("Y-m-d") }}">
+                <input type="text" class="form-control" id="anoConvenio" name="anoConvenio" maxlength="4">
             </div>
         </div>
         <hr>
@@ -71,7 +71,7 @@
         <div class="row">
             <div class="col-md-4 mb-3">
                 <label for="numNotaFiscal" class="form-label">Nº da Nota Fiscal</label>
-                <input type="text" class="form-control" id="numNotaFiscal" name="numNotaFiscal" maxlength="10">
+                <input type="text" class="form-control" id="numNotaFiscal" name="numNotaFiscal" maxlength="30">
             </div>
             <div class="col-md-4 mb-3">
                 <label for="dataNotaFiscal" class="form-label">Data da Nota Fiscal</label>
@@ -99,7 +99,7 @@
             </div>
         </div>
         <hr>
-        <h5>Contratação</h5>
+        <h5>Contrato</h5>
         <div class="row">
             <div class="col-md-3 mb-3">
                 <label for="numContrato" class="form-label">Nº do Contrato</label>
@@ -107,7 +107,7 @@
             </div>
             <div class="col-md-3 mb-3">
                 <label for="anoContrato" class="form-label">Ano do Contrato</label>
-                <input type="date" class="form-control" id="anoContrato" name="anoContrato" min="2024-01-01" max="{{ "now"|date("Y-m-d") }}">
+                <input type="text" class="form-control" id="anoContrato" name="anoContrato" maxlength="4">
             </div>
             <div class="col-md-3 mb-3">
                 <label for="valorContratacao" class="form-label">Valor da Contratação</label>
