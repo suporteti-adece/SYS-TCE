@@ -48,9 +48,10 @@ class ExigibilidadeWebController extends AbstractController
                 $this->service->create($data);
 
                 $this->addFlash('success', 'Exigibilidade cadastrada com sucesso!');
+
                 return $this->redirectToRoute('web_exigibilidade_list');
             } catch (Exception $exception) {
-                $this->addFlash('error', 'Erro ao cadastrar exigibilidade: ' . $exception->getMessage());
+                $this->addFlash('error', 'Erro ao cadastrar exigibilidade: '.$exception->getMessage());
             }
         }
 
@@ -64,6 +65,7 @@ class ExigibilidadeWebController extends AbstractController
 
         if (empty($exercicio) || empty($semestre)) {
             $this->addFlash('warning', 'Para exportar, por favor, selecione um Exercício e um Semestre.');
+
             return $this->redirectToRoute('web_exigibilidade_list');
         }
 
@@ -73,6 +75,7 @@ class ExigibilidadeWebController extends AbstractController
         ];
 
         $exigibilidades = $this->service->findBy($filters);
+
         return $exportService->export('xml', $exigibilidades, $filters);
     }
 }

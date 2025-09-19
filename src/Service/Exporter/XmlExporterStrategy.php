@@ -16,16 +16,16 @@ class XmlExporterStrategy implements ExporterStrategyInterface
         $semestre = str_pad($params['semestre'] ?? '1', 2, '0', STR_PAD_LEFT);
         $codOrgao = !empty($data) ? $data[0]->getCodOrgao() : '';
 
-        $xml = '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL;
-        $xml .= '<oce>' . PHP_EOL;
-        $xml .= "    <exercicio>{$exercicio}</exercicio>" . PHP_EOL;
-        $xml .= "    <semestre>{$semestre}</semestre>" . PHP_EOL;
-        $xml .= "    <codOrgao>{$codOrgao}</codOrgao>" . PHP_EOL;
-        $xml .= '    <exigibilidades>' . PHP_EOL;
+        $xml = '<?xml version="1.0" encoding="UTF-8"?>'.PHP_EOL;
+        $xml .= '<oce>'.PHP_EOL;
+        $xml .= "    <exercicio>{$exercicio}</exercicio>".PHP_EOL;
+        $xml .= "    <semestre>{$semestre}</semestre>".PHP_EOL;
+        $xml .= "    <codOrgao>{$codOrgao}</codOrgao>".PHP_EOL;
+        $xml .= '    <exigibilidades>'.PHP_EOL;
 
         /** @var Exigibilidade $exigibilidade */
         foreach ($data as $exigibilidade) {
-            $xml .= '        <exigibilidade>' . PHP_EOL;
+            $xml .= '        <exigibilidade>'.PHP_EOL;
 
             $xml .= $this->createNode('codFonteRecurso', $exigibilidade->getCodFonteRecurso());
             $xml .= $this->createNode('tipoRecurso', $exigibilidade->getTipoRecurso());
@@ -46,30 +46,31 @@ class XmlExporterStrategy implements ExporterStrategyInterface
             $xml .= $this->createNode('tipoExigibilidade', $exigibilidade->getTipoExigibilidade());
             $xml .= $this->createNode('justificativa', $exigibilidade->getJustificativa());
 
-            $xml .= '        </exigibilidade>' . PHP_EOL;
+            $xml .= '        </exigibilidade>'.PHP_EOL;
         }
 
-        $xml .= '    </exigibilidades>' . PHP_EOL;
-        $xml .= '</oce>' . PHP_EOL;
+        $xml .= '    </exigibilidades>'.PHP_EOL;
+        $xml .= '</oce>'.PHP_EOL;
 
         $fileName = sprintf('END_%s_%s_%s.xml', $codOrgao, $exercicio, $semestre);
 
         $response = new Response($xml);
         $response->headers->set('Content-Type', 'application/xml');
-        $response->headers->set('Content-Disposition', 'attachment; filename="' . $fileName . '"');
+        $response->headers->set('Content-Disposition', 'attachment; filename="'.$fileName.'"');
 
         return $response;
     }
 
     public function supports(string $format): bool
     {
-        return strtolower($format) === 'xml';
+        return 'xml' === strtolower($format);
     }
 
     private function createNode(string $tagName, ?string $value): string
     {
         $escapedValue = htmlspecialchars($value ?? '', ENT_XML1, 'UTF-8');
-        return "            <{$tagName}>{$escapedValue}</{$tagName}>" . PHP_EOL;
+
+        return "            <{$tagName}>{$escapedValue}</{$tagName}>".PHP_EOL;
     }
 
     private function formatDate(?string $date): string
@@ -77,6 +78,7 @@ class XmlExporterStrategy implements ExporterStrategyInterface
         if (empty($date)) {
             return '';
         }
+
         return (new DateTime($date))->format('d/m/Y');
     }
 
@@ -85,6 +87,7 @@ class XmlExporterStrategy implements ExporterStrategyInterface
         if (empty($value)) {
             return '0,00';
         }
+
         return number_format((float) $value, 2, ',', '');
     }
 }

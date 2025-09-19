@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\Service\Exporter\ExporterStrategyInterface;
+use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Response;
 
 class ExigibilidadeExportService
@@ -24,6 +24,6 @@ class ExigibilidadeExportService
             }
         }
 
-        throw new \InvalidArgumentException("Formato de exportação '{$format}' não suportado.");
+        throw new InvalidArgumentException("Formato de exportação '{$format}' não suportado.");
     }
 }
