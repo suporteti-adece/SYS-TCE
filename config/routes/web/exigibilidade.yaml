@@ -12,3 +12,8 @@ export_xml:
     path: /exigibilidade/export/xml
     controller: App\Controller\Web\ExigibilidadeWebController::exportXml
     methods: ['GET']
+
+edit:
+    path: /exigibilidades/{id}/editar
+    controller: App\Controller\Web\ExigibilidadeWebController::edit
+    methods: ['GET', 'POST']

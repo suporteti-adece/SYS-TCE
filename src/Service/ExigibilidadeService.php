@@ -7,7 +7,9 @@ namespace App\Service;
 use App\Entity\Exigibilidade;
 use App\Repository\Interface\ExigibilidadeRepositoryInterface;
 use App\Service\Interface\ExigibilidadeServiceInterface;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Uid\Uuid;
 
 readonly class ExigibilidadeService implements ExigibilidadeServiceInterface
 {
@@ -40,5 +42,28 @@ readonly class ExigibilidadeService implements ExigibilidadeServiceInterface
         });
 
         return $this->repository->findBy($filteredParams);
+    }
+
+    public function findOneBy(array $array): ?Exigibilidade
+    {
+        return $this->repository->findOneBy($array);
+    }
+
+    public function get(Uuid $id): ?Exigibilidade
+    {
+        $exigibilidade = $this->findOneBy(['id' => $id]);
+
+        if (null === $exigibilidade) {
+            throw new ResourceNotFoundException('Exigibilidade not found');
+        }
+
+        return $exigibilidade;
+    }
+
+    public function update(Exigibilidade $exigibilidade, array $data): Exigibilidade
+    {
+        $this->serializer->denormalize($data, Exigibilidade::class, 'array', ['object_to_populate' => $exigibilidade]);
+
+        return $this->repository->save($exigibilidade);
     }
 }
