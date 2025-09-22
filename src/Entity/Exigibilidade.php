@@ -58,7 +58,7 @@ class Exigibilidade
     #[ORM\Column(length: 10, nullable: true)]
     private ?string $dataPagamento = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 15, scale: 2, nullable: true)]
+    #[ORM\Column(type: Types::DECIMAL, precision: 20, scale: 2, nullable: true)]
     private ?string $valorPagamento = null;
 
     #[ORM\Column(length: 30, nullable: true)]
@@ -67,7 +67,7 @@ class Exigibilidade
     #[ORM\Column(length: 4, nullable: true)]
     private ?string $anoContrato = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 15, scale: 2, nullable: true)]
+    #[ORM\Column(type: Types::DECIMAL, precision: 20, scale: 2, nullable: true)]
     private ?string $valorContratacao = null;
 
     #[ORM\Column(length: 18, nullable: true)]

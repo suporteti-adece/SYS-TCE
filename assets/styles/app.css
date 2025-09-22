@@ -10,3 +10,14 @@
 .js-grid th {
     font-weight: bold;
 }
+
+table thead th {
+    font-size: 14px;
+    width: 30%;
+}
+
+select#tipoRecurso, select#tipoRecurso option,
+select#tipoExigibilidade, select#tipoExigibilidade option,
+select#semestre, select#semestre option {
+    font-size: 0.875rem;
+}

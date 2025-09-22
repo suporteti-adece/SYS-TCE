@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-
     const formatters = {
         cpf: (value) =>
             value
@@ -167,12 +166,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 field.value = formatters.padWithZeros(valueToPad, config.maxLength);
             }
         });
-
-        // const formData = new FormData(form);
-        // const data = Object.fromEntries(formData.entries());
-        // console.log('Dados a serem enviados para o back-end:', data);
-        //
-        // e.preventDefault();
     };
 
     form.addEventListener('submit', handleSubmit);

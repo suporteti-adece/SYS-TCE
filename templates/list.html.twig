@@ -48,13 +48,6 @@
             </div>
         </div>
 
-
-        {% for message in app.flashes('success') %}
-            <div class="alert alert-success">
-                {{ message }}
-            </div>
-        {% endfor %}
-
         <div class="table-responsive">
             <table class="table js-grid w-100">
                 <thead class="table-dark">
@@ -62,11 +55,23 @@
                     <th>Exercício</th>
                     <th>Semestre</th>
                     <th>Órgão</th>
-                    <th>Nº Contrato</th>
-                    <th>Credor (CPF/CNPJ)</th>
-                    <th>Valor da Contratação</th>
+                    <th title="Código da Fonte de Recurso">Cod. Fonte de Recurso</th>
+                    <th>Tipo de Recurso</th>
+                    <th>Tipo de Exigibilidade</th>
+                    <th>Nº Contrato Emprestimo</th>
+                    <th>Ano Contrato Emprestimo</th>
+                    <th>Nº Convênio</th>
+                    <th>Ano Convênio</th>
+                    <th>Nº Nota fiscal</th>
+                    <th>Data NF</th>
+                    <th>Data Atesto</th>
+                    <th>Id Pagamento</th>
+                    <th>Data Pagamento</th>
                     <th>Valor do Pagamento</th>
-                    <th>Data do Pagamento</th>
+                    <th>Nº Contrato</th>
+                    <th>Ano Contrato</th>
+                    <th>Valor da Contratação</th>
+                    <th>CPF ou CNPJ do Credor</th>
                     <th>Ações</th>
                 </tr>
                 </thead>
@@ -76,16 +81,29 @@
                         <td>{{ exigibilidade.exercicio }}</td>
                         <td>{{ exigibilidade.semestre }}</td>
                         <td>{{ exigibilidade.codOrgao }}</td>
-                        <td>{{ exigibilidade.numContrato|trim('0', 'left') }}</td>
-                        <td class="text-nowrap">{{ exigibilidade.cpfCnpjCredor }}</td>
-                        <td>R$ {{ exigibilidade.valorContratacao|number_format(2, ',', '.') }}</td>
-                        <td>R$ {{ exigibilidade.valorPagamento|number_format(2, ',', '.') }}</td>
+                        <td>{{ exigibilidade.codFonteRecurso }}</td>
+                        <td>{{ exigibilidade.tipoRecurso }}</td>
+                        <td>{{ exigibilidade.tipoExigibilidade }}</td>
+                        <td>{{ exigibilidade.numContratoEmprestimo|trim('0', 'left') }}</td>
+                        <td>{{ exigibilidade.anoContratoEmprestimo }}</td>
+                        <td>{{ exigibilidade.numConvenio|trim('0', 'left') }}</td>
+                        <td>{{ exigibilidade.anoConvenio }}</td>
+                        <td>{{ exigibilidade.numNotaFiscal|trim('0', 'left') }}</td>
+                        <td>{{ exigibilidade.dataNotaFiscal|date("d/m/Y") }}</td>
+                        <td>{{ exigibilidade.dataAtesto|date("d/m/Y") }}</td>
+                        <td>{{ exigibilidade.idPagamento }}</td>
                         <td>{{ exigibilidade.dataPagamento|date("d/m/Y") }}</td>
-
+                        <td>R$ {{ exigibilidade.valorPagamento|number_format(2, ',', '.') }}</td>
+                        <td>{{ exigibilidade.numContrato|trim('0', 'left') }}</td>
+                        <td>{{ exigibilidade.anoContrato }}</td>
+                        <td>R$ {{ exigibilidade.valorContratacao|number_format(2, ',', '.') }}</td>
+                        <td>{{ exigibilidade.cpfCnpjCredor }}</td>
                         <td style="min-width: 150px;">
                             <div class="d-flex gap-2">
                                 <a href="{{ path('web_exigibilidade_edit', {id: exigibilidade.id}) }}" class="btn btn-sm btn-outline-warning w-100">Editar</a>
-                                <a href="#" class="btn btn-sm btn-outline-danger w-100">Deletar</a>
+                                <button type="button" class="btn btn-sm btn-outline-danger w-100" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ exigibilidade.id }}">
+                                    Deletar
+                                </button>
                             </div>
                         </td>
                     </tr>
@@ -98,37 +116,29 @@
             </table>
         </div>
     </div>
-{% endblock %}
 
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirmar Exclusão</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Tem certeza que deseja deletar este item?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <form id="deleteForm" method="post">
+                        <button type="submit" class="btn btn-danger">Deletar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const exportButton = document.getElementById('export-btn-xml');
-
-            if (exportButton) {
-                exportButton.addEventListener('click', function(event) {
-                    event.preventDefault();
-
-                    const exercicio = document.getElementById('filterExercicio').value;
-                    const semestre = document.getElementById('filterSemestre').value;
-
-                    const baseUrl = this.getAttribute('href');
-
-                    const urlComFiltros = `${baseUrl}?exercicio=${exercicio}&semestre=${semestre}`;
-
-                    window.location.href = urlComFiltros;
-                });
-            }
-
-            const alerts = document.querySelectorAll('.alert-dismissible');
-
-            alerts.forEach(function(alert) {
-                setTimeout(function() {
-                    new bootstrap.Alert(alert).close();
-                }, 3000);
-            });
-        });
-    </script>
+    <script src="{{ asset('js/exigibilidade-forms.js') }}"></script>
 {% endblock %}

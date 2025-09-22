@@ -22,4 +22,10 @@ class ExigibilidadeRepository extends AbstractRepository implements Exigibilidad
 
         return $exigibilidade;
     }
+
+    public function remove(Exigibilidade $exigibilidade): void
+    {
+        $this->getEntityManager()->remove($exigibilidade);
+        $this->getEntityManager()->flush();
+    }
 }

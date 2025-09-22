@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
         columns: headers,
         data: buildGridDataFromRows(originalRows),
         search: false,
-        pagination: { enabled: true, limit: 10 },
+        pagination: { enabled: true, limit: 20 },
         sort: false,
         className: {
             table: 'table table-striped table-hover',

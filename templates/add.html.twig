@@ -36,11 +36,22 @@
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="tipoRecurso" class="form-label">Tipo do Recurso</label>
-                    <input type="text" class="form-control" id="tipoRecurso" name="tipoRecurso" maxlength="2">
+                    <select class="form-control" name="tipoRecurso" id="tipoRecurso">
+                        <option value="" disabled selected>Selecione</option>
+                        <option value="00">00 - Recurso vinculado</option>
+                        <option value="01">01 - Não vinculado do tipo investimento</option>
+                        <option value="02">02 - Não vinculado do tipo custeio</option>
+                    </select>
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="tipoExigibilidade" class="form-label">Tipo de Exigibilidade</label>
-                    <input type="text" class="form-control" id="tipoExigibilidade" name="tipoExigibilidade" maxlength="2">
+                    <select class="form-control" name="tipoExigibilidade" id="tipoExigibilidade">
+                        <option value="" disabled selected>Selecione</option>
+                        <option value="01">01 - Bens</option>
+                        <option value="02">02 - Locações</option>
+                        <option value="03">03 - Realizações de obras</option>
+                        <option value="04">04 - Prestação de serviços</option>
+                    </select>
                 </div>
             </div>
             <hr>

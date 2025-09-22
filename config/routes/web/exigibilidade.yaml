@@ -17,3 +17,8 @@ edit:
     path: /exigibilidades/{id}/editar
     controller: App\Controller\Web\ExigibilidadeWebController::edit
     methods: ['GET', 'POST']
+
+delete:
+    path: /exigibilidades/{id}/deletar
+    controller: App\Controller\Web\ExigibilidadeWebController::delete
+    methods: ['POST']

@@ -102,7 +102,7 @@ class ExigibilidadeWebController extends AbstractController
 
                 return $this->redirectToRoute('web_exigibilidade_list');
             } catch (Exception $exception) {
-                $this->addFlash('error', 'Erro ao atualizar exigibilidade: ' . $exception->getMessage());
+                $this->addFlash('error', 'Erro ao atualizar exigibilidade: '.$exception->getMessage());
             }
         }
 
@@ -111,4 +111,16 @@ class ExigibilidadeWebController extends AbstractController
         ]);
     }
 
+    public function delete(string $id): Response
+    {
+        try {
+            $this->service->remove(Uuid::fromString($id));
+
+            $this->addFlash('success', 'Exigibilidade deletada com sucesso!');
+        } catch (Exception $exception) {
+            $this->addFlash('error', 'Erro ao deletar exigibilidade: '.$exception->getMessage());
+        }
+
+        return $this->redirectToRoute('web_exigibilidade_list');
+    }
 }

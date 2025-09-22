@@ -20,4 +20,6 @@ interface ExigibilidadeServiceInterface
     public function get(Uuid $id): ?Exigibilidade;
 
     public function update(Exigibilidade $exigibilidade, array $data): Exigibilidade;
+
+    public function remove(Uuid $id): void;
 }

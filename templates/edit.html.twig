@@ -25,11 +25,22 @@
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="tipoRecurso" class="form-label">Tipo do Recurso</label>
-                    <input type="text" class="form-control" id="tipoRecurso" name="tipoRecurso" maxlength="2" value="{{ exigibilidade.tipoRecurso }}">
+                    <select class="form-control" name="tipoRecurso" id="tipoRecurso">
+                        <option value="" disabled>Selecione</option>
+                        <option value="00" {% if exigibilidade.tipoRecurso == '00' %}selected{% endif %}>00 - Recurso vinculado</option>
+                        <option value="01" {% if exigibilidade.tipoRecurso == '01' %}selected{% endif %}>01 - Não vinculado do tipo investimento</option>
+                        <option value="02" {% if exigibilidade.tipoRecurso == '02' %}selected{% endif %}>02 - Não vinculado do tipo custeio</option>
+                    </select>
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="tipoExigibilidade" class="form-label">Tipo de Exigibilidade</label>
-                    <input type="text" class="form-control" id="tipoExigibilidade" name="tipoExigibilidade" maxlength="2" value="{{ exigibilidade.tipoExigibilidade }}">
+                    <select class="form-control" name="tipoExigibilidade" id="tipoExigibilidade">
+                        <option value="" disabled>Selecione</option>
+                        <option value="01" {% if exigibilidade.tipoExigibilidade == '01' %}selected{% endif %}>01 - Bens</option>
+                        <option value="02" {% if exigibilidade.tipoExigibilidade == '02' %}selected{% endif %}>02 - Locações</option>
+                        <option value="03" {% if exigibilidade.tipoExigibilidade == '03' %}selected{% endif %}>03 - Realizações de obras</option>
+                        <option value="04" {% if exigibilidade.tipoExigibilidade == '04' %}selected{% endif %}>04 - Prestação de serviços</option>
+                    </select>
                 </div>
             </div>
             <hr>
@@ -85,7 +96,7 @@
                 </div>
                 <div class="col-md-4 mb-3">
                     <label for="valorPagamento" class="form-label">Valor do Pagamento</label>
-                    <input type="text" class="form-control" id="valorPagamento" name="valorPagamento" value="{{ exigibilidade.valorPagamento }}">
+                    <input type="text" class="form-control" id="valorPagamento" name="valorPagamento" value="{{ exigibilidade.valorPagamento|number_format(2, ',', '.') }}">
                 </div>
             </div>
             <hr>

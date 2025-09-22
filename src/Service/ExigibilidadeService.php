@@ -66,4 +66,15 @@ readonly class ExigibilidadeService implements ExigibilidadeServiceInterface
 
         return $this->repository->save($exigibilidade);
     }
+
+    public function remove(Uuid $id): void
+    {
+        $exigibilidade = $this->findOneBy(['id' => $id]);
+
+        if (null === $exigibilidade) {
+            throw new ResourceNotFoundException('Exigibilidade not found');
+        }
+
+        $this->repository->remove($exigibilidade);
+    }
 }
