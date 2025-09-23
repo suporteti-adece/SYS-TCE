@@ -77,7 +77,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Listeners
     if (filterExercicio) filterExercicio.addEventListener('change', applyFilters);
     if (filterSemestre) filterSemestre.addEventListener('change', applyFilters);
 });
