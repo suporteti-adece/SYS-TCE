@@ -55,12 +55,12 @@
                     <th>Exercício</th>
                     <th>Semestre</th>
                     <th>Órgão</th>
-                    <th title="Código da Fonte de Recurso">Cod. Fonte de Recurso</th>
+                    <th>Fonte de Recurso</th>
                     <th>Tipo de Recurso</th>
                     <th>Tipo de Exigibilidade</th>
                     <th>Nº Contrato Emprestimo</th>
                     <th>Ano Contrato Emprestimo</th>
-                    <th>Nº Convênio</th>
+                    <th>Nº do Convênio</th>
                     <th>Ano Convênio</th>
                     <th>Nº Nota fiscal</th>
                     <th>Data NF</th>
@@ -91,7 +91,7 @@
                         <td>{{ exigibilidade.numNotaFiscal|trim('0', 'left') }}</td>
                         <td>{{ exigibilidade.dataNotaFiscal|date("d/m/Y") }}</td>
                         <td>{{ exigibilidade.dataAtesto|date("d/m/Y") }}</td>
-                        <td>{{ exigibilidade.idPagamento }}</td>
+                        <td>{{ exigibilidade.idPagamento|trim('0', 'left') }}</td>
                         <td>{{ exigibilidade.dataPagamento|date("d/m/Y") }}</td>
                         <td>R$ {{ exigibilidade.valorPagamento|number_format(2, ',', '.') }}</td>
                         <td>{{ exigibilidade.numContrato|trim('0', 'left') }}</td>

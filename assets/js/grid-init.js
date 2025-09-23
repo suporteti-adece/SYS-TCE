@@ -5,7 +5,60 @@ document.addEventListener('DOMContentLoaded', () => {
     const filterExercicio = document.getElementById('filterExercicio');
     const filterSemestre = document.getElementById('filterSemestre');
 
-    const headers = Array.from(table.querySelectorAll('thead th')).map(th => th.textContent.trim());
+    const columns = Array.from(table.querySelectorAll('thead th')).map(th => {
+        const columnName = th.textContent.trim();
+
+        switch (columnName) {
+            case 'Exercício':
+                return {
+                    name: columnName,
+                    width: '120px',
+                    sort: false
+                };
+            case 'Semestre':
+                return {
+                    name: columnName,
+                    width: '120px',
+                    sort: false
+                };
+            case 'Órgão':
+                return {
+                    name: columnName,
+                    width: '120px',
+                    sort: false
+                };
+            case 'Fonte de Recurso':
+                return {
+                    name: columnName,
+                    width: '150px'
+                }
+            case 'Tipo de Recurso':
+                return {
+                    name: columnName,
+                    width: '160px'
+                }
+            case 'Ano Convênio':
+                return {
+                    name: columnName,
+                    width: '150px'
+                }
+            case 'Nº Nota fiscal':
+                return {
+                    name: columnName,
+                    width: '150px'
+                }
+            case 'Ações':
+                return {
+                    name: columnName,
+                    sort: false
+                };
+            default:
+                return {
+                    name: columnName,
+                    minWidth: '200px'
+                };
+        }
+    });
 
     const tbodyRows = Array.from(table.querySelectorAll('tbody tr'));
     const originalRows = tbodyRows.map(tr => {
@@ -31,11 +84,11 @@ document.addEventListener('DOMContentLoaded', () => {
         rows.map(r => [...r.cellsText, gridjs.html(r.actionsHtml)]);
 
     const grid = new gridjs.Grid({
-        columns: headers,
+        columns: columns,
         data: buildGridDataFromRows(originalRows),
         search: false,
         pagination: { enabled: true, limit: 20 },
-        sort: false,
+        sort: true,
         className: {
             table: 'table table-striped table-hover',
             th: 'table-dark'
