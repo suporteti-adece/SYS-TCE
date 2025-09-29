@@ -6,6 +6,7 @@ namespace App\Repository;
 
 use App\Entity\Exigibilidade;
 use App\Repository\Interface\ExigibilidadeRepositoryInterface;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\Persistence\ManagerRegistry;
 
 class ExigibilidadeRepository extends AbstractRepository implements ExigibilidadeRepositoryInterface
@@ -27,5 +28,18 @@ class ExigibilidadeRepository extends AbstractRepository implements Exigibilidad
     {
         $this->getEntityManager()->remove($exigibilidade);
         $this->getEntityManager()->flush();
+    }
+
+    public function findNextIdPagamento(): int
+    {
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('max_id', 'max_id');
+
+        $sql = 'SELECT MAX(CAST(id_pagamento AS BIGINT)) as max_id FROM exigibilidade';
+        $query = $this->getEntityManager()->createNativeQuery($sql, $rsm);
+
+        $result = $query->getSingleScalarResult();
+
+        return ($result !== null) ? (int) $result + 1 : 1;
     }
 }

@@ -41,7 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
         numNotaFiscal: { maxLength: 30, required: true, pad: true },
         dataNotaFiscal: { isDate: true, required: true },
         dataAtesto: { isDate: true, required: true },
-        idPagamento: { maxLength: 20, required: true, pad: true },
         dataPagamento: { isDate: true, required: true },
         valorPagamento: { isCurrency: true, required: true, numericOnly: true },
         numContrato: { maxLength: 30, pad: true },

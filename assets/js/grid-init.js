@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
             case 'Nº Nota fiscal':
                 return {
                     name: columnName,
-                    width: '150px'
+                    minWidth: '180px'
                 }
             case 'Ações':
                 return {
