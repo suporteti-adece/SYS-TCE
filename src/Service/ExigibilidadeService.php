@@ -21,6 +21,10 @@ readonly class ExigibilidadeService implements ExigibilidadeServiceInterface
 
     public function create(array $data): Exigibilidade
     {
+        $nextId = $this->repository->findNextIdPagamento();
+
+        $data['idPagamento'] = str_pad((string) $nextId, 20, '0', STR_PAD_LEFT);
+
         $exigibilidade = $this->serializer->denormalize($data, Exigibilidade::class);
 
         return $this->repository->save($exigibilidade);

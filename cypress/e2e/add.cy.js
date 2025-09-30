@@ -17,7 +17,6 @@ describe('Cadastro de Exigibilidades', () => {
             cy.get('#numNotaFiscal').type(Math.floor(Math.random() * 1000).toString());
             cy.get('#dataNotaFiscal').type('2025-01-15');
             cy.get('#dataAtesto').type('2025-01-16');
-            cy.get('#idPagamento').type(`PAG-${i}`);
             cy.get('#dataPagamento').type('2025-01-17');
             cy.get('#valorPagamento').type('1000,00');
             cy.get('#numContrato').type(`CT-${i}`);
