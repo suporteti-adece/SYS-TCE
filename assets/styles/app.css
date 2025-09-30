@@ -2,18 +2,17 @@
     overflow-x: auto;
 }
 
-.js-grid th, .js-grid td {
+.gridjs-table th, .gridjs-table td {
     white-space: nowrap;
     vertical-align: middle;
 }
 
-.js-grid th {
+.gridjs-table th {
     font-weight: bold;
 }
 
 table thead th {
     font-size: 14px;
-    width: 30%;
 }
 
 select#tipoRecurso, select#tipoRecurso option,

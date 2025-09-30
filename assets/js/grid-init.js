@@ -5,6 +5,41 @@ document.addEventListener('DOMContentLoaded', () => {
     const filterExercicio = document.getElementById('filterExercicio');
     const filterSemestre = document.getElementById('filterSemestre');
 
+    const numericSort = (a, b) => {
+        const parseCurrency = (value) => {
+            if (typeof value !== 'string') {
+                value = String(value);
+            }
+            const numberString = value.replace(/\./g, '').replace(',', '.').replace(/[^0-9.-]/g, '');
+
+            return parseFloat(numberString) || 0;
+        };
+
+        const aNum = parseCurrency(a);
+        const bNum = parseCurrency(b);
+
+        if (aNum > bNum) {
+            return 1;
+        } else if (bNum > aNum) {
+            return -1;
+        }
+        return 0;
+    };
+
+    const dateSort = (a, b) => {
+        const parseDate = (dateStr) => {
+            if (!dateStr || typeof dateStr !== 'string') return 0;
+            const parts = dateStr.split('/');
+            if (parts.length !== 3) return 0;
+            return new Date(parts[2], parts[1] - 1, parts[0]).getTime();
+        };
+        const aDate = parseDate(a);
+        const bDate = parseDate(b);
+        if (aDate > bDate) return 1;
+        if (bDate > aDate) return -1;
+        return 0;
+    };
+
     const columns = Array.from(table.querySelectorAll('thead th')).map(th => {
         const columnName = th.textContent.trim();
 
@@ -30,23 +65,101 @@ document.addEventListener('DOMContentLoaded', () => {
             case 'Fonte de Recurso':
                 return {
                     name: columnName,
-                    width: '150px'
-                }
+                    width: '150px',
+                    sort: {
+                        compare: numericSort
+                    }
+                };
             case 'Tipo de Recurso':
                 return {
                     name: columnName,
                     width: '160px'
-                }
+                };
+            case 'Nº Contrato Emprestimo':
+                return {
+                    name: columnName,
+                    minWidth: '310px',
+                    sort: false
+                };
             case 'Ano Convênio':
                 return {
                     name: columnName,
-                    width: '150px'
+                    width: '150px',
+                    sort: {
+                        compare: numericSort
+                    }
+                };
+            case 'Nº do Convênio':
+                return {
+                    name: columnName,
+                    minWidth: '310px',
+                    sort: false
                 }
             case 'Nº Nota fiscal':
                 return {
                     name: columnName,
-                    minWidth: '180px'
+                    width: '310px',
+                    sort: false
+                };
+            case 'Data NF':
+                return {
+                    name: columnName,
+                    sort: {
+                        compare: dateSort
+                    }
                 }
+            case 'Data Atesto':
+                return {
+                    name: columnName,
+                    sort: {
+                        compare: dateSort
+                    }
+                };
+            case 'Id Pagamento':
+                return {
+                    name: columnName,
+                    minWidth: '200px',
+                    sort: {
+                        compare: numericSort
+                    }
+                };
+            case 'Data Pagamento':
+                return {
+                    name: columnName,
+                    sort: {
+                        compare: dateSort
+                    }
+                };
+            case 'Valor do Pagamento':
+                return {
+                    name: columnName,
+                    minWidth: '280px',
+                    sort: {
+                        compare: numericSort
+                    }
+                }
+            case 'Valor da Contratação':
+                return {
+                    name: columnName,
+                    minWidth: '280px',
+                    sort: {
+                        compare: numericSort
+                    }
+                };
+            case 'Nº Contrato':
+                return {
+                    name: columnName,
+                    minWidth: '310px',
+                    sort: false
+                };
+            case 'Ano Contrato':
+                return {
+                    name: columnName,
+                    minWidth: '210px',
+                    sort: {
+                        compare: numericSort
+                    }
+                };
             case 'Ações':
                 return {
                     name: columnName,
