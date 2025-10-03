@@ -47,6 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
         anoContrato: { isYear: true, maxLength: 4, numericOnly: true },
         valorContratacao: { isCurrency: true, required: true, numericOnly: true },
         cpfCnpjCredor: { isCpfCnpj: true, required: true, maxLength: 18, numericOnly: true },
+        razaoSocial: { maxLength: 100, required: false },
     };
 
     const restrictInput = (e) => {

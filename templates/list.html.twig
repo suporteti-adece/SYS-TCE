@@ -72,6 +72,7 @@
                     <th>Ano Contrato</th>
                     <th>Valor da Contratação</th>
                     <th>CPF ou CNPJ do Credor</th>
+                    <th>Razão Social</th>
                     <th>Ações</th>
                 </tr>
                 </thead>
@@ -98,6 +99,7 @@
                         <td>{{ exigibilidade.anoContrato }}</td>
                         <td>R$ {{ exigibilidade.valorContratacao|number_format(2, ',', '.') }}</td>
                         <td>{{ exigibilidade.cpfCnpjCredor }}</td>
+                        <td>{{ exigibilidade.razaoSocial }}</td>
                         <td style="min-width: 150px;">
                             <div class="d-flex gap-2">
                                 <a href="{{ path('web_exigibilidade_edit', {id: exigibilidade.id}) }}" class="btn btn-sm btn-outline-warning w-100">Editar</a>
