@@ -73,6 +73,9 @@ class Exigibilidade
     #[ORM\Column(length: 18, nullable: true)]
     private ?string $cpfCnpjCredor = null;
 
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $razaoSocial = null;
+
     #[ORM\Column(length: 2, nullable: true)]
     private ?string $tipoExigibilidade = null;
 
@@ -272,6 +275,16 @@ class Exigibilidade
     public function getCpfCnpjCredor(): ?string
     {
         return $this->cpfCnpjCredor;
+    }
+
+    public function getRazaoSocial(): ?string
+    {
+        return $this->razaoSocial;
+    }
+
+    public function setRazaoSocial(?string $razaoSocial): void
+    {
+        $this->razaoSocial = $razaoSocial;
     }
 
     public function setCpfCnpjCredor(?string $cpfCnpjCredor): void

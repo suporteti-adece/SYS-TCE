@@ -102,23 +102,30 @@
             <hr>
             <h5>Contrato</h5>
             <div class="row">
-                 <div class="col-md-3 mb-3">
+                 <div class="col-md-4 mb-3">
                     <label for="numContrato" class="form-label">Nº do Contrato</label>
                     <input type="text" class="form-control" id="numContrato" name="numContrato" maxlength="30" value="{{ exigibilidade.numContrato }}">
                 </div>
-                 <div class="col-md-3 mb-3">
+                 <div class="col-md-4 mb-3">
                     <label for="anoContrato" class="form-label">Ano do Contrato</label>
                     <input type="text" class="form-control" id="anoContrato" name="anoContrato" maxlength="4" value="{{ exigibilidade.anoContrato }}">
                 </div>
-                <div class="col-md-3 mb-3">
+                <div class="col-md-4 mb-3">
                     <label for="valorContratacao" class="form-label">Valor da Contratação</label>
                     <input type="text" class="form-control" id="valorContratacao" name="valorContratacao" value="{{ exigibilidade.valorContratacao|number_format(2, ',', '.') }}">
                 </div>
-                <div class="col-md-3 mb-3">
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
                     <label for="cpfCnpjCredor" class="form-label">CPF/CNPJ do Credor</label>
                     <input type="text" class="form-control" id="cpfCnpjCredor" name="cpfCnpjCredor" maxlength="18" value="{{ exigibilidade.cpfCnpjCredor }}">
                 </div>
+                <div class="col-md-6 mb-3">
+                    <label for="razaoSocial" class="form-label">Razão Social</label>
+                    <input type="text" class="form-control" id="razaoSocial" name="razaoSocial" maxlength="100" value="{{ exigibilidade.razaoSocial }}">
+                </div>
             </div>
+            <hr>
             <div class="row">
                 <div class="col-12 mb-3">
                     <label class="form-label">Justificativa (Opcional)</label>

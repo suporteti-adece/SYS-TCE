@@ -160,6 +160,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         compare: numericSort
                     }
                 };
+            case 'Razão Social':
+                return {
+                    name: columnName,
+                    minWidth: '310px',
+                    sort: false
+                };
             case 'Ações':
                 return {
                     name: columnName,
